@@ -47,6 +47,7 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
         //openScanner();
         openHome();
 
+
     }
 
     public void openHome() {

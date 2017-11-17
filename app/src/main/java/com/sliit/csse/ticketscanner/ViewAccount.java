@@ -14,7 +14,7 @@ public class ViewAccount extends AppCompatActivity {
 
     String userKey;
     private TextView amountText;
-    private TextView loanText;
+    private TextView loanText,detailText;
     private DatabaseReference databaseUsers;
 
     @Override
@@ -24,6 +24,7 @@ public class ViewAccount extends AppCompatActivity {
 
         amountText = (TextView) findViewById(R.id.amountView);
         loanText = (TextView) findViewById(R.id.loanView);
+        detailText = (TextView) findViewById(R.id.details);
 
         //userKey = getIntent().getExtras().getString("post_id");
         userKey = "12345678V";
@@ -36,8 +37,15 @@ public class ViewAccount extends AppCompatActivity {
                 String amount = (String) dataSnapshot.child("AMOUNT").getValue().toString();
                 String loan = (String) dataSnapshot.child("LOAN").getValue().toString();
 
-                amountText.setText(amount);
-                loanText.setText(loan);
+                amountText.setText(amount+".00");
+                loanText.setText(loan+".00");
+                if(loan.equals("0")){
+                    detailText.setText("Now your account have Rs."+amount+".00 and you have not any loan");
+                }else {
+                    detailText.setText("Now your account have Rs."+amount+".00 and Rs."+loan+".00 in your loan");
+                }
+
+
 
             }
 

@@ -6,14 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.sliit.csse.ticketscanner.EndRide">
 
-    <Spinner
-        android:id="@+id/endPoint"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:background="@drawable/ride"/>
+
+    <Spinner
+        android:id="@+id/endPoint"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="345dp"
+        android:layout_marginLeft="65dp"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="57dp"
-        />
+        tools:layout_editor_absoluteY="16dp" />
+
 
 
     <Button
@@ -22,6 +28,45 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:text="end my journey" />
+        android:text="end my journey"
+        android:textColor="#ffff"
+        android:background="#2a6fb4"/>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="23dp"
+        android:layout_marginTop="320dp"
+        android:text="Select your end loaction in hear"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="260dp"
+        android:text="loading.."
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="228dp"
+        android:textSize="24sp" />
+
+
+
+
+
 
 </RelativeLayout>

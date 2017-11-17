@@ -12,9 +12,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import br.com.bloder.magic.Magic;
+import br.com.bloder.magic.view.MagicButton;
+
 public class UserHome extends AppCompatActivity {
 
-    Button startRideBtn,rideListBtn,accountBtn;
+    MagicButton startRideBtn,rideListBtn,accountBtn;
     String userKey,rideFlag;
     private DatabaseReference databaseUsers;
 
@@ -43,9 +46,9 @@ public class UserHome extends AppCompatActivity {
         });
 
 
-        startRideBtn=(Button) findViewById(R.id.startRide);
-        rideListBtn=(Button) findViewById(R.id.rideList);
-        accountBtn=(Button) findViewById(R.id.account);
+        startRideBtn=(MagicButton) findViewById(R.id.startRide);
+        rideListBtn=(MagicButton) findViewById(R.id.rideList);
+        accountBtn=(MagicButton) findViewById(R.id.account);
 
         openRideList();
         openAccount();
@@ -55,7 +58,7 @@ public class UserHome extends AppCompatActivity {
     }
 
     private void openAccount() {
-        accountBtn.setOnClickListener(
+        accountBtn.setMagicButtonClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -67,7 +70,7 @@ public class UserHome extends AppCompatActivity {
     }
 
     private void openRideList() {
-        rideListBtn.setOnClickListener(
+        rideListBtn.setMagicButtonClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -79,7 +82,7 @@ public class UserHome extends AppCompatActivity {
     }
 
     private void openRide() {
-        startRideBtn.setOnClickListener(
+        startRideBtn.setMagicButtonClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

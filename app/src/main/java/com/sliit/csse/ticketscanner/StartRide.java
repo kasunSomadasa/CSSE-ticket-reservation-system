@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,12 +23,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class StartRide extends AppCompatActivity {
 
-    String userKey,amount,loan,loanFlag;
+    String userKey,amount,loan,loanFlag,formattedDate,formattedTime;
     private DatabaseReference databaseUsers,databaseUsersUpdate,databaseUserStartPoint;
     private Button startJourneyBtn;
     private Spinner startSpinner;
+    private TextView startDateText;
     static final String[] startCitys=new String[]{"Choose your start point","Colombo","Malabe","Kaduwela","Kandy","Kurunegala"};
 
 
@@ -65,11 +70,26 @@ public class StartRide extends AppCompatActivity {
         startSpinner=(Spinner)findViewById(R.id.startPoint);
         ArrayAdapter<String> startAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,startCitys);
         startSpinner.setAdapter(startAdapter);
+        startDateText=(TextView)findViewById(R.id.startDate);
+
+
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        formattedDate = df.format(c.getTime());
+        SimpleDateFormat tf = new SimpleDateFormat("HH:mm:ss");
+        formattedTime = tf.format(c.getTime());
+
+        startDateText.setText("Current Date: "+formattedDate);
 
 
         startJourney();
         //Toast.makeText(StartRide.this,startSpinner.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
     }
+
+
+
 
     private void startJourney() {
         startJourneyBtn.setOnClickListener(
@@ -100,7 +120,8 @@ public class StartRide extends AppCompatActivity {
             DatabaseReference db=databaseUserStartPoint.push();
             db.child("FROM").setValue(startSpinner.getSelectedItem().toString());
             db.child("TO").setValue("");
-            db.child("START_DATE").setValue("hfjgj");
+            db.child("START_DATE").setValue(formattedDate);
+            db.child("START_TIME").setValue(formattedTime);
             db.child("StartRideFlag").setValue("true");
 
             Toast.makeText(StartRide.this,"1 Have a safe journey...",Toast.LENGTH_LONG).show();
@@ -116,7 +137,8 @@ public class StartRide extends AppCompatActivity {
                         DatabaseReference db=databaseUserStartPoint.push();
                         db.child("FROM").setValue(startSpinner.getSelectedItem().toString());
                         db.child("TO").setValue("");
-                        db.child("START_DATE").setValue("hfjgj");
+                        db.child("START_DATE").setValue(formattedDate);
+                        db.child("START_TIME").setValue(formattedTime);
                         db.child("StartRideFlag").setValue("true");
 
                         Toast.makeText(StartRide.this," 2Have a safe journey...",Toast.LENGTH_LONG).show();
@@ -136,7 +158,8 @@ public class StartRide extends AppCompatActivity {
                 DatabaseReference db=databaseUserStartPoint.push();
                 db.child("FROM").setValue(startSpinner.getSelectedItem().toString());
                 db.child("TO").setValue("");
-                db.child("START_DATE").setValue("hfjgj");
+                db.child("START_DATE").setValue(formattedDate);
+                db.child("START_TIME").setValue(formattedTime);
                 db.child("StartRideFlag").setValue("true");
                 Toast.makeText(StartRide.this," 3Have a safe journey...",Toast.LENGTH_LONG).show();
             }

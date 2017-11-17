@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,13 +18,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class EndRide extends AppCompatActivity {
 
-    String userKey,amount,loan,to,price,from,travelKey;
+    String userKey,amount,loan,to,price,from,travelKey,formattedDate,formattedTime;
     private DatabaseReference databaseUsers,databaseTravelInfo,databaseUsersUpdate,databaseUserStartPoint;
     Query searchTravelAmountQuary,searchTravelStartPointQuary;
     private Button endJourneyBtn;
     private Spinner endSpinner;
+    private TextView endDateText;
     static final String[] endCitys=new String[]{"Choose your end point","Colombo","Malabe","Kaduwela","Kandy","Kurunegala"};
 
 
@@ -80,6 +85,17 @@ public class EndRide extends AppCompatActivity {
         endSpinner=(Spinner)findViewById(R.id.endPoint);
         ArrayAdapter<String> endAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,endCitys);
         endSpinner.setAdapter(endAdapter);
+        endDateText = (TextView)findViewById(R.id.endDate);
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        formattedDate = df.format(c.getTime());
+        SimpleDateFormat tf = new SimpleDateFormat("HH:mm:ss");
+        formattedTime = tf.format(c.getTime());
+
+        endDateText.setText("Current Date: "+formattedDate);
+
 
         endJourney();
 
@@ -142,6 +158,9 @@ public class EndRide extends AppCompatActivity {
 
             databaseUserStartPoint.child(travelKey).child("TO").setValue(endSpinner.getSelectedItem().toString());
             databaseUserStartPoint.child(travelKey).child("StartRideFlag").setValue("false");
+            databaseUserStartPoint.child(travelKey).child("EndDate").setValue(formattedDate);
+            databaseUserStartPoint.child(travelKey).child("EndTime").setValue(formattedTime);
+            databaseUserStartPoint.child(travelKey).child("TicketPrice").setValue(price);
 
         }else{
             if(loan>0){
@@ -152,6 +171,9 @@ public class EndRide extends AppCompatActivity {
                     databaseUsersUpdate.child("rideFlag").setValue("false");
                     databaseUserStartPoint.child(travelKey).child("StartRideFlag").setValue("false");
                     databaseUserStartPoint.child(travelKey).child("TO").setValue(endSpinner.getSelectedItem().toString());
+                    databaseUserStartPoint.child(travelKey).child("EndDate").setValue(formattedDate);
+                    databaseUserStartPoint.child(travelKey).child("EndTime").setValue(formattedTime);
+                    databaseUserStartPoint.child(travelKey).child("TicketPrice").setValue(price);
 
                     if(loan>=price){
                         loan=loan-price;

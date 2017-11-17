@@ -4,6 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sliit.csse.ticketscanner.UserHome">
+    tools:context="com.sliit.csse.ticketscanner.UserHome"
+    android:background="@drawable/capture">
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <br.com.bloder.magic.view.MagicButton
+        android:id="@+id/rideList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:magic_button_size="60dp"
+        app:button_icon="@mipmap/ic_view_list_white_24dp"
+        app:button_icon_width="35dp"
+        app:button_icon_height="33dp"
+        app:hide_text="Ride List"
+        app:hide_text_size="15dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="140dp"
+        app:hide_text_color="@android:color/white"
+        app:icon_button_color="#2a6fb4"
+        app:expandable_area_color="#832a6fb4"/>
+
+    <br.com.bloder.magic.view.MagicButton
+        android:id="@+id/account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:magic_button_size="60dp"
+        app:button_icon="@mipmap/ic_monetization_on_white_24dp"
+        app:button_icon_width="35dp"
+        app:button_icon_height="33dp"
+        app:hide_text="Account"
+        android:layout_marginTop="30dp"
+        app:hide_text_size="15dp"
+        android:layout_marginLeft="110dp"
+        app:hide_text_color="@android:color/white"
+        app:icon_button_color="#2a6fb4"
+        app:expandable_area_color="#832a6fb4"/>
+
+    <br.com.bloder.magic.view.MagicButton
+        android:id="@+id/startRide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:magic_button_size="60dp"
+        app:button_icon="@mipmap/ic_directions_bus_white_24dp"
+        app:button_icon_width="35dp"
+        app:button_icon_height="33dp"
+        app:hide_text="Ride"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="30dp"
+        app:hide_text_size="15dp"
+        app:hide_text_color="@android:color/white"
+        app:icon_button_color="#2a6fb4"
+        app:expandable_area_color="#832a6fb4"/>
+</LinearLayout>
+
+
+
+
 
 </RelativeLayout>

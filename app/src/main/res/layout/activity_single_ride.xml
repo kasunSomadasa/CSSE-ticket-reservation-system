@@ -4,32 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sliit.csse.ticketscanner.UserHome">
+    tools:context="com.sliit.csse.ticketscanner.SingleRide">
 
-    <Button
-        android:id="@+id/rideList"
+    <TextView
+        android:id="@+id/fromView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:text="Ride List" />
+        android:layout_marginTop="87dp"
+        android:text="TextView" />
 
-    <Button
-        android:id="@+id/account"
+    <TextView
+        android:id="@+id/toView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="71dp"
-        android:text="Account"
-        android:layout_below="@+id/rideList"
-        android:layout_alignEnd="@+id/rideList" />
+        android:layout_alignEnd="@+id/fromView"
+        android:layout_below="@+id/fromView"
+        android:layout_marginTop="36dp"
+        android:text="TextView" />
 
-    <Button
-        android:id="@+id/startRide"
+    <TextView
+        android:id="@+id/startDateView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/account"
-        android:layout_below="@+id/account"
-        android:layout_marginTop="82dp"
-        android:text="Start Ride" />
+        android:layout_alignEnd="@+id/toView"
+        android:layout_below="@+id/toView"
+        android:layout_marginTop="52dp"
+        android:text="TextView" />
 </RelativeLayout>

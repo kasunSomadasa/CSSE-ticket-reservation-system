@@ -26,16 +26,16 @@ public class ViewAccount extends AppCompatActivity {
         loanText = (TextView) findViewById(R.id.loanView);
         detailText = (TextView) findViewById(R.id.details);
 
-        //userKey = getIntent().getExtras().getString("post_id");
-        userKey = "12345678V";
+        userKey = getIntent().getExtras().getString("postId");
+        //userKey = "12345678V";
 
-        databaseUsers= FirebaseDatabase.getInstance().getReference().child("USERS");
+        databaseUsers= FirebaseDatabase.getInstance().getReference().child("Users");
         databaseUsers.child(userKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String amount = (String) dataSnapshot.child("AMOUNT").getValue().toString();
-                String loan = (String) dataSnapshot.child("LOAN").getValue().toString();
+                String amount = (String) dataSnapshot.child("Amount").getValue().toString();
+                String loan = (String) dataSnapshot.child("Loan").getValue().toString();
 
                 amountText.setText(amount+".00");
                 loanText.setText(loan+".00");

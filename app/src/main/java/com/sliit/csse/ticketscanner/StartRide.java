@@ -42,12 +42,12 @@ public class StartRide extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_ride);
 
-        //userKey = getIntent().getExtras().getString("post_id");
-        userKey = "12345678V";
+        userKey = getIntent().getExtras().getString("postId");
+        //userKey = "12345678V";
         startJourneyBtn=(Button)findViewById(R.id.journey);
-        databaseUsers= FirebaseDatabase.getInstance().getReference().child("USERS");
-        databaseUserStartPoint=FirebaseDatabase.getInstance().getReference().child("USERS").child(userKey).child("TRAVEL");
-        databaseUsersUpdate= FirebaseDatabase.getInstance().getReference().child("USERS").child(userKey);
+        databaseUsers= FirebaseDatabase.getInstance().getReference().child("Users");
+        databaseUserStartPoint=FirebaseDatabase.getInstance().getReference().child("Users").child(userKey).child("Travel");
+        databaseUsersUpdate= FirebaseDatabase.getInstance().getReference().child("Users").child(userKey);
 
 
 
@@ -56,9 +56,9 @@ public class StartRide extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                amount = (String) dataSnapshot.child("AMOUNT").getValue().toString();
-                loan = (String) dataSnapshot.child("LOAN").getValue().toString();
-                loanFlag = (String) dataSnapshot.child("loanFlag").getValue().toString();
+                amount = (String) dataSnapshot.child("Amount").getValue().toString();
+                loan = (String) dataSnapshot.child("Loan").getValue().toString();
+                loanFlag = (String) dataSnapshot.child("LoanFlag").getValue().toString();
             }
 
             @Override
@@ -115,13 +115,13 @@ public class StartRide extends AppCompatActivity {
 
         if(amount >= price){
             //ok
-            databaseUsersUpdate.child("rideFlag").setValue("true");
+            databaseUsersUpdate.child("RideFlag").setValue("true");
 
             DatabaseReference db=databaseUserStartPoint.push();
-            db.child("FROM").setValue(startSpinner.getSelectedItem().toString());
-            db.child("TO").setValue("");
-            db.child("START_DATE").setValue(formattedDate);
-            db.child("START_TIME").setValue(formattedTime);
+            db.child("From").setValue(startSpinner.getSelectedItem().toString());
+            db.child("To").setValue("");
+            db.child("StartDate").setValue(formattedDate);
+            db.child("StartTime").setValue(formattedTime);
             db.child("StartRideFlag").setValue("true");
 
             Toast.makeText(StartRide.this,"1 Have a safe journey...",Toast.LENGTH_LONG).show();
@@ -133,12 +133,12 @@ public class StartRide extends AppCompatActivity {
                     double total = amount+loan;
                     if(total >= price){
                         //ok
-                        databaseUsersUpdate.child("rideFlag").setValue("true");
+                        databaseUsersUpdate.child("RideFlag").setValue("true");
                         DatabaseReference db=databaseUserStartPoint.push();
-                        db.child("FROM").setValue(startSpinner.getSelectedItem().toString());
-                        db.child("TO").setValue("");
-                        db.child("START_DATE").setValue(formattedDate);
-                        db.child("START_TIME").setValue(formattedTime);
+                        db.child("From").setValue(startSpinner.getSelectedItem().toString());
+                        db.child("To").setValue("");
+                        db.child("StartDate").setValue(formattedDate);
+                        db.child("StartTime").setValue(formattedTime);
                         db.child("StartRideFlag").setValue("true");
 
                         Toast.makeText(StartRide.this," 2Have a safe journey...",Toast.LENGTH_LONG).show();
@@ -154,12 +154,12 @@ public class StartRide extends AppCompatActivity {
                 }
 
             }else{
-                databaseUsersUpdate.child("rideFlag").setValue("true");
+                databaseUsersUpdate.child("RideFlag").setValue("true");
                 DatabaseReference db=databaseUserStartPoint.push();
-                db.child("FROM").setValue(startSpinner.getSelectedItem().toString());
-                db.child("TO").setValue("");
-                db.child("START_DATE").setValue(formattedDate);
-                db.child("START_TIME").setValue(formattedTime);
+                db.child("From").setValue(startSpinner.getSelectedItem().toString());
+                db.child("To").setValue("");
+                db.child("StartDate").setValue(formattedDate);
+                db.child("StartTime").setValue(formattedTime);
                 db.child("StartRideFlag").setValue("true");
                 Toast.makeText(StartRide.this," 3Have a safe journey...",Toast.LENGTH_LONG).show();
             }

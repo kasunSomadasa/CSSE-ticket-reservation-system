@@ -15,13 +15,15 @@ public class RideList extends AppCompatActivity {
 
     private RecyclerView rideList;
     private DatabaseReference databaseTravel;
+    String userKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_list);
 
-        databaseTravel= FirebaseDatabase.getInstance().getReference().child("USERS").child("12345678V").child("TRAVEL");
+        userKey = getIntent().getExtras().getString("postId");
+        databaseTravel= FirebaseDatabase.getInstance().getReference().child("Users").child(userKey).child("Travel");
        // databaseTravel= FirebaseDatabase.getInstance().getReference().child("TRAVEL_INFO");
 
         rideList=(RecyclerView)findViewById(R.id.listOfRides);
@@ -47,16 +49,17 @@ public class RideList extends AppCompatActivity {
 
                 final String rideKey=getRef(position).getKey();
 
-                viewHolder.setFROM(model.getFROM());
-                viewHolder.setTO(model.getTO());
-                viewHolder.setSTART_DATE(model.getSTART_DATE());
+                viewHolder.setFROM(model.getFrom());
+                viewHolder.setTO(model.getTo());
+                viewHolder.setSTART_DATE(model.getStartDate());
 
                 viewHolder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         Intent OnePost=new Intent(RideList.this, SingleRide.class);
-                        OnePost.putExtra("post_id",rideKey);
+                        OnePost.putExtra("singlePostId",rideKey);
+                        OnePost.putExtra("postId",userKey);
                         startActivity(OnePost);
                     }
                 });

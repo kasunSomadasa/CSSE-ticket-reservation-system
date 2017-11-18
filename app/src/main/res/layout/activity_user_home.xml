@@ -25,7 +25,7 @@
         app:hide_text="Ride List"
         app:hide_text_size="15dp"
         android:layout_marginTop="110dp"
-        android:layout_marginLeft="140dp"
+        android:layout_marginLeft="125dp"
         app:hide_text_color="@android:color/white"
         app:icon_button_color="#2a6fb4"
         app:expandable_area_color="#832a6fb4"/>
@@ -41,7 +41,7 @@
         app:hide_text="Account"
         android:layout_marginTop="30dp"
         app:hide_text_size="15dp"
-        android:layout_marginLeft="110dp"
+        android:layout_marginLeft="95dp"
         app:hide_text_color="@android:color/white"
         app:icon_button_color="#2a6fb4"
         app:expandable_area_color="#832a6fb4"/>
@@ -55,7 +55,7 @@
         app:button_icon_width="35dp"
         app:button_icon_height="33dp"
         app:hide_text="Ride"
-        android:layout_marginLeft="75dp"
+        android:layout_marginLeft="60dp"
         android:layout_marginTop="30dp"
         app:hide_text_size="15dp"
         app:hide_text_color="@android:color/white"

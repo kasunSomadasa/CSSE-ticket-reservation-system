@@ -22,16 +22,16 @@
         tools:layout_editor_absoluteY="16dp" />
 
 
-
     <Button
         android:id="@+id/journey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:background="#2a6fb4"
         android:text="start my journey"
         android:textColor="#ffff"
-        android:background="#2a6fb4"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView6"

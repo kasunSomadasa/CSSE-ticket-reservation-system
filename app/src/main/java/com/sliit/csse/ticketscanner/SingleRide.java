@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SingleRide extends AppCompatActivity {
 
-    String rideKey;
+    String rideKey,userKey;
     private TextView fromText,startTimeText,endDateText,endTimeText,amountText;
     private TextView toText;
     private TextView startDateText;
@@ -32,16 +32,17 @@ public class SingleRide extends AppCompatActivity {
         amountText = (TextView) findViewById(R.id.amountView);
 
 
-        rideKey = getIntent().getExtras().getString("post_id");
+        rideKey = getIntent().getExtras().getString("singlePostId");
+        userKey = getIntent().getExtras().getString("postId");
 
-        databaseTravel= FirebaseDatabase.getInstance().getReference().child("USERS").child("12345678V").child("TRAVEL");
+        databaseTravel= FirebaseDatabase.getInstance().getReference().child("Users").child(userKey).child("Travel");
         databaseTravel.child(rideKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String from = (String) dataSnapshot.child("FROM").getValue();
-                String to = (String) dataSnapshot.child("TO").getValue();
-                String startDate = (String) dataSnapshot.child("START_DATE").getValue();
+                String from = (String) dataSnapshot.child("From").getValue();
+                String to = (String) dataSnapshot.child("To").getValue();
+                String startDate = (String) dataSnapshot.child("StartDate").getValue();
                 String endDate = (String) dataSnapshot.child("EndDate").getValue();
                 String startTime = (String) dataSnapshot.child("StartTime").getValue();
                 String endTime = (String) dataSnapshot.child("EndTime").getValue();

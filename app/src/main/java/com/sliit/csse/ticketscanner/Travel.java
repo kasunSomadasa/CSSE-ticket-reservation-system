@@ -5,37 +5,37 @@ package com.sliit.csse.ticketscanner;
  */
 
 public class Travel {
-    private String FROM,TO,START_DATE;
+    private String From,To,StartDate;
 
     public Travel() {}
 
-    public Travel(String FROM, String TO, String START_DATE) {
-        this.FROM = FROM;
-        this.TO = TO;
-        this.START_DATE = START_DATE;
+    public Travel(String From, String To, String START_DATE) {
+        this.From = From;
+        this.To = To;
+        this.StartDate = START_DATE;
     }
 
-    public String getFROM() {
-        return FROM;
+    public String getFrom() {
+        return From;
     }
 
-    public void setFROM(String FROM) {
-        this.FROM = FROM;
+    public void setFrom(String From) {
+        this.From = From;
     }
 
-    public String getTO() {
-        return TO;
+    public String getTo() {
+        return To;
     }
 
-    public void setTO(String TO) {
-        this.TO = TO;
+    public void setTo(String To) {
+        this.To = To;
     }
 
-    public String getSTART_DATE() {
-        return START_DATE;
+    public String getStartDate() {
+        return StartDate;
     }
 
-    public void setSTART_DATE(String START_DATE) {
-        this.START_DATE = START_DATE;
+    public void setStartDate(String StartDate) {
+        this.StartDate = StartDate;
     }
 }

@@ -40,13 +40,13 @@ public class SingleRide extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String from = (String) dataSnapshot.child("From").getValue();
-                String to = (String) dataSnapshot.child("To").getValue();
-                String startDate = (String) dataSnapshot.child("StartDate").getValue();
-                String endDate = (String) dataSnapshot.child("EndDate").getValue();
-                String startTime = (String) dataSnapshot.child("StartTime").getValue();
-                String endTime = (String) dataSnapshot.child("EndTime").getValue();
-                String price = (String) dataSnapshot.child("TicketPrice").getValue().toString();
+                String from = (String) dataSnapshot.child("from").getValue();
+                String to = (String) dataSnapshot.child("to").getValue();
+                String startDate = (String) dataSnapshot.child("startDate").getValue();
+                String endDate = (String) dataSnapshot.child("endDate").getValue();
+                String startTime = (String) dataSnapshot.child("startTime").getValue();
+                String endTime = (String) dataSnapshot.child("endTime").getValue();
+                String price = (String) dataSnapshot.child("ticketPrice").getValue().toString();
 
                 fromText.setText(from);
                 toText.setText(to);

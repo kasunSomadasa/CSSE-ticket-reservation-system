@@ -34,8 +34,8 @@ public class ViewAccount extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String amount = (String) dataSnapshot.child("Amount").getValue().toString();
-                String loan = (String) dataSnapshot.child("Loan").getValue().toString();
+                String amount = (String) dataSnapshot.child("amount").getValue().toString();
+                String loan = (String) dataSnapshot.child("loan").getValue().toString();
 
                 amountText.setText(amount+".00");
                 loanText.setText(loan+".00");

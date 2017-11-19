@@ -41,6 +41,7 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        databaseUsers= FirebaseDatabase.getInstance().getReference().child("Users");
 
        // mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -136,13 +137,28 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
     @Override
     public void handleResult(Result result) {
 
-        openAddNumberPopUp(result.getText());
+        final String userId=result.getText();
+        databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                if (snapshot.hasChild(userId)) {
+                    succesAlert(userId);
+                }else{
+                    errorAlert();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
-    public void openAddNumberPopUp(final String value) {
-
-
+    public void succesAlert(final String value) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
@@ -164,5 +180,35 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
         AlertDialog alert = builder.create();
         alert.show();
       //  scannerView.resumeCameraPreview(this);
+    }
+
+
+    public void errorAlert() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle("Card is invalid");
+        builder.setMessage("We can't detected your card number.Do you want to check again?");
+        builder.setInverseBackgroundForced(true);
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                scannerView.resumeCameraPreview(Home.this);
+            }
+        });
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                System.exit(0);
+
+            }
+        });
+
+
+
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 }

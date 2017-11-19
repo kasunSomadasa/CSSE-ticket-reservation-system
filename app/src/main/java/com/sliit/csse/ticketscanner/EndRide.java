@@ -50,8 +50,8 @@ public class EndRide extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                amount = (String) dataSnapshot.child("Amount").getValue().toString();
-                loan = (String) dataSnapshot.child("Loan").getValue().toString();
+                amount = (String) dataSnapshot.child("amount").getValue().toString();
+                loan = (String) dataSnapshot.child("loan").getValue().toString();
             }
 
             @Override
@@ -60,7 +60,7 @@ public class EndRide extends AppCompatActivity {
             }
         });
 
-        searchTravelStartPointQuary= databaseUserStartPoint.orderByChild("StartRideFlag").equalTo("true");
+        searchTravelStartPointQuary= databaseUserStartPoint.orderByChild("startRideFlag").equalTo("true");
         searchTravelStartPointQuary.addValueEventListener( new ValueEventListener()
         {
             @Override
@@ -68,7 +68,7 @@ public class EndRide extends AppCompatActivity {
             {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren())
                 {
-                    from = (String) postSnapshot.child("From").getValue().toString();
+                    from = (String) postSnapshot.child("from").getValue().toString();
                     travelKey=postSnapshot.getKey();
 
                 }
@@ -108,7 +108,7 @@ public class EndRide extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        searchTravelAmountQuary= databaseTravelInfo.orderByChild("From").equalTo(from);
+                        searchTravelAmountQuary= databaseTravelInfo.orderByChild("from").equalTo(from);
                         searchTravelAmountQuary.addValueEventListener( new ValueEventListener()
                         {
                             @Override
@@ -116,11 +116,13 @@ public class EndRide extends AppCompatActivity {
                             {
                                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren())
                                 {
-                                    to = (String) postSnapshot.child("To").getValue().toString();
+
+                                    to = (String) postSnapshot.child("to").getValue().toString();
 
                                     if(to.equals(endSpinner.getSelectedItem().toString())){
 
-                                        price = (String) postSnapshot.child("Price").getValue().toString();
+                                        price = (String) postSnapshot.child("price").getValue().toString();
+                                    
                                         checkAmount(amount,price,loan);
                                     }
 
@@ -151,39 +153,39 @@ public class EndRide extends AppCompatActivity {
 
         if(amount >= price){
             //ok
-            Toast.makeText(EndRide.this,"1We have deduct Rs."+price+" from your account.Have a safe journey...",Toast.LENGTH_LONG).show();
+            Toast.makeText(EndRide.this,"We have deduct Rs."+price+" from your account.Have a safe journey...",Toast.LENGTH_LONG).show();
             double newAmount=amount-price;
-            databaseUsersUpdate.child("Amount").setValue(newAmount);
-            databaseUsersUpdate.child("RideFlag").setValue("false");
+            databaseUsersUpdate.child("amount").setValue(newAmount);
+            databaseUsersUpdate.child("rideFlag").setValue("false");
 
-            databaseUserStartPoint.child(travelKey).child("To").setValue(endSpinner.getSelectedItem().toString());
-            databaseUserStartPoint.child(travelKey).child("StartRideFlag").setValue("false");
-            databaseUserStartPoint.child(travelKey).child("EndDate").setValue(formattedDate);
-            databaseUserStartPoint.child(travelKey).child("EndTime").setValue(formattedTime);
-            databaseUserStartPoint.child(travelKey).child("TicketPrice").setValue(price);
+            databaseUserStartPoint.child(travelKey).child("to").setValue(endSpinner.getSelectedItem().toString());
+            databaseUserStartPoint.child(travelKey).child("startRideFlag").setValue("false");
+            databaseUserStartPoint.child(travelKey).child("endDate").setValue(formattedDate);
+            databaseUserStartPoint.child(travelKey).child("endTime").setValue(formattedTime);
+            databaseUserStartPoint.child(travelKey).child("ticketPrice").setValue(price);
 
         }else{
             if(loan>0){
                 double total = amount+loan;
                 if(total >= price){
                     //ok
-                    Toast.makeText(EndRide.this,"2We have deduct Rs."+price+" from your account.Have a safe journey...",Toast.LENGTH_LONG).show();
-                    databaseUsersUpdate.child("RideFlag").setValue("false");
-                    databaseUserStartPoint.child(travelKey).child("StartRideFlag").setValue("false");
-                    databaseUserStartPoint.child(travelKey).child("To").setValue(endSpinner.getSelectedItem().toString());
-                    databaseUserStartPoint.child(travelKey).child("EndDate").setValue(formattedDate);
-                    databaseUserStartPoint.child(travelKey).child("EndTime").setValue(formattedTime);
-                    databaseUserStartPoint.child(travelKey).child("TicketPrice").setValue(price);
+                    Toast.makeText(EndRide.this,"We have deduct Rs."+price+" from your account.Have a safe journey...",Toast.LENGTH_LONG).show();
+                    databaseUsersUpdate.child("rideFlag").setValue("false");
+                    databaseUserStartPoint.child(travelKey).child("startRideFlag").setValue("false");
+                    databaseUserStartPoint.child(travelKey).child("to").setValue(endSpinner.getSelectedItem().toString());
+                    databaseUserStartPoint.child(travelKey).child("endDate").setValue(formattedDate);
+                    databaseUserStartPoint.child(travelKey).child("endTime").setValue(formattedTime);
+                    databaseUserStartPoint.child(travelKey).child("ticketPrice").setValue(price);
 
                     if(loan>=price){
                         loan=loan-price;
-                        databaseUsersUpdate.child("Loan").setValue(loan);
+                        databaseUsersUpdate.child("loan").setValue(loan);
                     }else{
                         price=price-loan;
                         loan=0;
                         amount=amount-price;
-                        databaseUsersUpdate.child("Amount").setValue(amount);
-                        databaseUsersUpdate.child("Loan").setValue(loan);
+                        databaseUsersUpdate.child("amount").setValue(amount);
+                        databaseUsersUpdate.child("loan").setValue(loan);
                     }
 
 
@@ -210,8 +212,8 @@ public class EndRide extends AppCompatActivity {
         builder.setInverseBackgroundForced(true);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                databaseUsersUpdate.child("Loan").setValue("200");
-                databaseUsersUpdate.child("LoanFlag").setValue("true");
+                databaseUsersUpdate.child("loan").setValue("200");
+                databaseUsersUpdate.child("loanFlag").setValue("true");
 
                 Toast.makeText(EndRide.this,"Now,You have Rs.200.00 loan",Toast.LENGTH_LONG).show();
                 /*
@@ -237,7 +239,7 @@ public class EndRide extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(EndRide.this,"Sorry,We can't pay for your jouney.Your account and loan balance are too low...",Toast.LENGTH_LONG).show();
-                dialog.dismiss();
+                //dialog.dismiss();
             }
         });
         AlertDialog alert = builder.create();

@@ -38,7 +38,7 @@ public class UserHome extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                rideFlag = (String) dataSnapshot.child("RideFlag").getValue().toString();
+                rideFlag = (String) dataSnapshot.child("rideFlag").getValue().toString();
 
 
             }

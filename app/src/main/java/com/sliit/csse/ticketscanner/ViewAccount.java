@@ -10,6 +10,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Created by Kasun
+ * This is ViewAccount page which is use for display user account details
+ */
 public class ViewAccount extends AppCompatActivity {
 
     String userKey;
@@ -25,15 +29,15 @@ public class ViewAccount extends AppCompatActivity {
         amountText = (TextView) findViewById(R.id.amountView);
         loanText = (TextView) findViewById(R.id.loanView);
         detailText = (TextView) findViewById(R.id.details);
-
+        //get user key from HomeScanner activity
         userKey = getIntent().getExtras().getString("postId");
-        //userKey = "12345678V";
-
+        //create database references
         databaseUsers= FirebaseDatabase.getInstance().getReference().child("Users");
+
         databaseUsers.child(userKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                //get amount,loan value belongs to user and set into relevant text fields
                 String amount = (String) dataSnapshot.child("amount").getValue().toString();
                 String loan = (String) dataSnapshot.child("loan").getValue().toString();
 

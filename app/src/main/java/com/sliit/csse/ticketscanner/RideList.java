@@ -11,6 +11,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Created by Kasun
+ * This is RideList page which is use for display ride history
+ */
 public class RideList extends AppCompatActivity {
 
     private RecyclerView rideList;
@@ -22,9 +26,10 @@ public class RideList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_list);
 
+        //get user key from UserHome activity
         userKey = getIntent().getExtras().getString("postId");
+        ////create database references
         databaseTravel= FirebaseDatabase.getInstance().getReference().child("Users").child(userKey).child("Travel");
-       // databaseTravel= FirebaseDatabase.getInstance().getReference().child("TRAVEL_INFO");
 
         rideList=(RecyclerView)findViewById(R.id.listOfRides);
         LinearLayoutManager mManager = new LinearLayoutManager(this);
@@ -34,6 +39,9 @@ public class RideList extends AppCompatActivity {
         rideList.setLayoutManager(mManager);
     }
 
+    /**
+     * load all ride details to list view when activity open
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -48,15 +56,15 @@ public class RideList extends AppCompatActivity {
             protected void populateViewHolder(rideViewHolder viewHolder, Travel model, int position) {
 
                 final String rideKey=getRef(position).getKey();
-
-                viewHolder.setFROM(model.getFrom());
-                viewHolder.setTO(model.getTo());
-                viewHolder.setSTART_DATE(model.getStartDate());
+                //display from,to,start date value in list view items
+                viewHolder.setFrom(model.getFrom());
+                viewHolder.setTo(model.getTo());
+                viewHolder.setStartDate(model.getStartDate());
 
                 viewHolder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        //send user key and single ride key to SingleRide activity when user click on list view item
                         Intent OnePost=new Intent(RideList.this, SingleRide.class);
                         OnePost.putExtra("singlePostId",rideKey);
                         OnePost.putExtra("postId",userKey);
@@ -65,9 +73,7 @@ public class RideList extends AppCompatActivity {
                 });
             }
             };
-
-
-
+            //set adapter to list view
             rideList.setAdapter(firebaseRecyclerAdapter);
             firebaseRecyclerAdapter.notifyDataSetChanged();
 
@@ -79,15 +85,15 @@ public class RideList extends AppCompatActivity {
             super(itemView);
             view=itemView;
         }
-        public void setFROM(String from){
+        public void setFrom(String from){
             TextView ride_from=(TextView)view.findViewById(R.id.fromText);
             ride_from.setText(from);
         }
-        public void setTO(String to){
+        public void setTo(String to){
             TextView ride_to=(TextView)view.findViewById(R.id.toText);
             ride_to.setText(to);
         }
-        public void setSTART_DATE(String date){
+        public void setStartDate(String date){
             TextView ride_startDate=(TextView)view.findViewById(R.id.dateText);
             ride_startDate.setText(date);
         }

@@ -1,11 +1,16 @@
 package com.sliit.csse.ticketscanner;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
- * Created by Kasun on 11/15/2017.
+ * Created by Kasun
+ * This is Travel class which is use for display ride details in list view
  */
 
 public class Travel {
     private String from,to,startDate;
+
 
     public Travel() {}
 

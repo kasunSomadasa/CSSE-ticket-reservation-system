@@ -8,30 +8,28 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.Result;
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-
-public class Home extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+/**
+ * Created by Monaridu
+ * This is Scanner page which is use for scan QR code
+ */
+public class HomeScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
     Button scannerBtn,homeBtn;
-    //private DatabaseReference mDatabaseUser,DatabaseUser,mDatabaseUserA;
     private  DatabaseReference databaseUsers;
-
+    private static final String TAG = "1";
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private ZXingScannerView scannerView;
 
@@ -41,43 +39,16 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //create database reference from 'Users' branch
         databaseUsers= FirebaseDatabase.getInstance().getReference().child("Users");
-
-       // mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users");
-
         //request permission to read camera
         checkAndRequestPermissions();
 
-/*
-        DatabaseUser= FirebaseDatabase.getInstance().getReference().child("TravelInfo");
-        mDatabaseUser= FirebaseDatabase.getInstance().getReference().child("Users").child("12345678V");
-        mDatabaseUserA=mDatabaseUser.child("Travel");
-        DatabaseReference db=mDatabaseUserA.push();
-        db.child("From").setValue("hfjgj");
-        db.child("To").setValue("hfjgj");
-        db.child("StartDate").setValue("hfjgj");
-
-        mDatabaseUser.child("Fname").setValue("Kasun");
-        mDatabaseUser.child("Lname").setValue("Kasun");
-        mDatabaseUser.child("ContactNo").setValue("23");
-        mDatabaseUser.child("NIC").setValue("23");
-        mDatabaseUser.child("CardId").setValue("23");
-        mDatabaseUser.child("Amount").setValue("230");
-        mDatabaseUser.child("Loan").setValue("0");
-        mDatabaseUser.child("RideFlag").setValue("false");
-        mDatabaseUser.child("LoanFlag").setValue("false");
-
-     DatabaseReference db1=DatabaseUser.push();
-       db1.child("From").setValue("Colombo");
-        db1.child("To").setValue("Kurunegala");
-        db1.child("Price").setValue("150");
-        db1.child("Class").setValue("3");
-*/
         homeBtn = (Button) findViewById(R.id.homeButton);
         scannerBtn = (Button) findViewById(R.id.scannerButton);
-        //openScanner();
-        openHome();
 
+        openHome();
+        //open QR scanner
         openScanner();
     }
 
@@ -87,7 +58,7 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(Home.this, UserHome.class);
+                        Intent intent = new Intent(HomeScanner.this, UserHome.class);
                         startActivity(intent);
                     }
                 }
@@ -96,9 +67,7 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
 
 
     /**
-     *
-     * below methods use for qr code reading
-     *
+     * below methods use for request permission for camera
      */
     private  boolean checkAndRequestPermissions() {
 
@@ -119,32 +88,36 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
 
     }
 
-
+    //open scanner
     public void openScanner() {
-        scannerView =new ZXingScannerView(Home.this);
+        scannerView =new ZXingScannerView(HomeScanner.this);
         setContentView(scannerView);
-        scannerView.setResultHandler(Home.this);
+        scannerView.setResultHandler(HomeScanner.this);
         scannerView.startCamera();
     }
 
-
+    //pause scanner
     @Override
     protected void onPause() {
         super.onPause();
         scannerView.stopCamera();
     }
 
+    //read QR code
     @Override
     public void handleResult(Result result) {
 
+        //check that QR code exist in firebase
         final String userId=result.getText();
         databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
                 if (snapshot.hasChild(userId)) {
-                    succesAlert(userId);
+                    //give success msg
+                    successAlert(userId);
                 }else{
+                    //if not error msg
                     errorAlert();
                 }
             }
@@ -158,7 +131,7 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
 
     }
 
-    public void succesAlert(final String value) {
+    public void successAlert(final String userId) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
@@ -168,10 +141,10 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
-                //Toast.makeText(Home.this,value,Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(Home.this, UserHome.class);
-                intent.putExtra("postId",value);
+                Log.i(TAG,"Entering to the system");
+                //go to the user home page
+                Intent intent = new Intent(HomeScanner.this, UserHome.class);
+                intent.putExtra("postId",userId);
                 startActivity(intent);
 
             }
@@ -179,7 +152,7 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
 
         AlertDialog alert = builder.create();
         alert.show();
-      //  scannerView.resumeCameraPreview(this);
+
     }
 
 
@@ -192,19 +165,19 @@ public class Home extends AppCompatActivity implements ZXingScannerView.ResultHa
         builder.setInverseBackgroundForced(true);
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-
-                scannerView.resumeCameraPreview(Home.this);
+                //reopen camera
+                scannerView.resumeCameraPreview(HomeScanner.this);
+                Log.i(TAG,"Invalid Number");
             }
         });
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-
+                Log.i(TAG,"Exit from the system");
+                //exit from application
                 System.exit(0);
 
             }
         });
-
-
 
 
         AlertDialog alert = builder.create();

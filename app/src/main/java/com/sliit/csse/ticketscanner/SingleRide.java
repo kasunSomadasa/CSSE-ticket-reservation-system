@@ -10,6 +10,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Created by Kasun
+ * This is SingleRide page which is use for display single ride details in history
+ */
 public class SingleRide extends AppCompatActivity {
 
     String rideKey,userKey;
@@ -31,15 +35,15 @@ public class SingleRide extends AppCompatActivity {
         endTimeText= (TextView) findViewById(R.id.endTimeView);
         amountText = (TextView) findViewById(R.id.amountView);
 
-
+        //get user key and single ride key from RideList activity
         rideKey = getIntent().getExtras().getString("singlePostId");
         userKey = getIntent().getExtras().getString("postId");
-
+        //create database references
         databaseTravel= FirebaseDatabase.getInstance().getReference().child("Users").child(userKey).child("Travel");
         databaseTravel.child(rideKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                //get all information in Travel branch
                 String from = (String) dataSnapshot.child("from").getValue();
                 String to = (String) dataSnapshot.child("to").getValue();
                 String startDate = (String) dataSnapshot.child("startDate").getValue();
@@ -47,7 +51,7 @@ public class SingleRide extends AppCompatActivity {
                 String startTime = (String) dataSnapshot.child("startTime").getValue();
                 String endTime = (String) dataSnapshot.child("endTime").getValue();
                 String price = (String) dataSnapshot.child("ticketPrice").getValue().toString();
-
+                //set above data to relevant text fields
                 fromText.setText(from);
                 toText.setText(to);
                 startDateText.setText(startDate);
